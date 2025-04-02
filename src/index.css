@@ -114,3 +114,11 @@ button[disabled] {
     padding: 5px;
     border-radius: 5px;
 }
+
+.container .success {
+    color: #23721c;
+    background-color: #d7f8d9;
+    border: 1px solid #ccf5c6;
+    padding: 5px;
+    border-radius: 5px;
+}
