@@ -32,8 +32,8 @@ const Register = () => {
                 setError(false)
             }, 3000);
 
-            // Se error mudar antes do tempo acabar, o clearTimeout evita múltiplos timers.
-            return () => clearTimeout(time); // Limpa o timer ao desmontar o componente
+            // If error changes before end of time, the clearTimeout avoid multiple timers.
+            return () => clearTimeout(time); // clean the timer at desmounting of component
         }
     }, [ error ]);
 
