@@ -29,8 +29,8 @@ function App() {
         onAuthStateChanged(auth, (userReturn) => {
             setUser(userReturn);
         })
-        console.log('usuario: ',user)
-    }, [auth]);
+    }, [ auth ]);
+    //console.log('usuario: ',user)
     
     // check user not authenticated
     if(user === undefined){
