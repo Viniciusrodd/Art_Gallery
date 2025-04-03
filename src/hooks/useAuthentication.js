@@ -29,6 +29,7 @@ export const useAuthentication = () => {
     
     const auth = getAuth()// from firebase:
 
+
     // register user function
     const createUser = async (data) => {
         checkIfIsCancelled();
@@ -60,5 +61,13 @@ export const useAuthentication = () => {
         };
     };
 
-    return { auth, createUser, loading, error };
+
+    // logout
+    const logout = async () => {
+        checkIfIsCancelled();
+        await signOut(auth);
+    };
+
+
+    return { auth, createUser, loading, error, logout };
 }

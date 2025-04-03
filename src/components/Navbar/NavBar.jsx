@@ -7,8 +7,12 @@ import { useNavigate, NavLink } from 'react-router-dom';
 // context
 import { useAuthValue } from '../../context/AuthContext';
 
+// hooks
+import { useAuthentication } from '../../hooks/useAuthentication';
+
 const NavBar = () => {
     const { user } = useAuthValue();
+    const { logout } = useAuthentication();
 
     return (
         <nav className={ styles.navbar }>
@@ -17,13 +21,13 @@ const NavBar = () => {
             </NavLink>
 
             <ul className={ styles.links_list }>
-                <li>
-                    <NavLink to='/' className={ ({ isActive }) => ( isActive ? styles.active : '' ) }> 
-                        Home 
-                    </NavLink>
-                </li>
                 { !user ? (
                     <>
+                        <li>
+                            <NavLink to='/' className={ ({ isActive }) => ( isActive ? styles.active : '' ) }> 
+                                Home 
+                            </NavLink>
+                        </li>
                         <li>
                             <NavLink to='/login' className={ ({ isActive }) => ( isActive ? styles.active : '' ) }>
                                 Entrar
@@ -34,9 +38,19 @@ const NavBar = () => {
                                 Cadastrar
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to='/about' className={ ({ isActive }) => ( isActive ? styles.active : '' ) }>
+                                Sobre
+                            </NavLink>
+                        </li>
                     </>
                 ) : (
                     <>
+                        <li>
+                            <NavLink to='/' className={ ({ isActive }) => ( isActive ? styles.active : '' ) }> 
+                                Home 
+                            </NavLink>
+                        </li>
                         <li>
                             <NavLink to='/posts/create' className={ ({ isActive }) => ( isActive ? styles.active : '' ) }>
                                 Novo Post
@@ -47,13 +61,16 @@ const NavBar = () => {
                                 Dashboard
                             </NavLink>
                         </li>
+                        <li>
+                            <NavLink to='/about' className={ ({ isActive }) => ( isActive ? styles.active : '' ) }>
+                                Sobre
+                            </NavLink>
+                        </li>
+                        <li>
+                            <button onClick={ logout }>Sair</button>
+                        </li>
                     </>
                 ) }
-                <li>
-                    <NavLink to='/about' className={ ({ isActive }) => ( isActive ? styles.active : '' ) }>
-                        Sobre
-                    </NavLink>
-                </li>
             </ul>
         </nav>
     );
