@@ -4,7 +4,6 @@
 import { useState, useEffect, useReducer } from "react";
 import { db } from '../firebase/config';
 import { collection, addDoc, Timestamp } from "firebase/firestore"; // from firebase
-import { useFetcher } from "react-router-dom";
 
 const initialState = {
     loading: null,
@@ -36,20 +35,18 @@ export const useInsertDocuments = (docCollection) => {
     };
 
     const insertDocument = async (document) =>{
-        checkCancelBeforeDispatch({
-            type: 'LOADING',
-        });
+        checkCancelBeforeDispatch({ type: 'LOADING' });
 
         try{
-            const newDocument = {...document, createdAt: Timestamp.now()};
-            const insertDocument = await addDoc(
+            const newDocument = { ...document, createdAt: Timestamp.now() };
+            const insertedDocument = await addDoc(
                 collection(db, docCollection),
                 newDocument
             );
 
             checkCancelBeforeDispatch({
                 type: 'INSERTED_DOC',
-                payload: insertDocument
+                payload: insertedDocument
             });
         }
         catch(error){
@@ -67,5 +64,5 @@ export const useInsertDocuments = (docCollection) => {
         }
     }, []);
 
-    return { insertDocument, response }
+    return { insertDocument, response };
 };

@@ -17,4 +17,3 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export { db }; // for import with keys, like: ( import { db } from '...' )
-export default db; // for import with no keys, like: ( import db from '...' )

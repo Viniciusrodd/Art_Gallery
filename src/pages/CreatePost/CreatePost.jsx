@@ -6,6 +6,7 @@ import styles from './CreatePost.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthValue } from '../../context/AuthContext'; // Auth Context
+import { useInsertDocuments } from '../../hooks/useInsertDocuments'; // custom hook
 
 const CreatePost = () => {
     const [ title, setTitle ] = useState('');
@@ -13,9 +14,42 @@ const CreatePost = () => {
     const [ body, setBody ] = useState('');
     const [ tags, setTags ] = useState([]);
     const [ formError, setFormError ] = useState('');
+    
+    const { insertDocument, response } = useInsertDocuments('posts'); // from custom hook, 'posts': callback to 'docCollection'
+    const { user } = useAuthValue() // user value from context
+    const navigate = useNavigate();
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+
+        // validation url image
+        try {
+            new URL(image);
+        } 
+        catch (error) {
+            setFormError("A imagem precisa ser uma URL.");
+        }
+
+        // create array of tags
+        const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase());
+
+        // check all the values
+        if (!title || !image || !tags || !body) {
+            setFormError("Por favor, preencha todos os campos!");
+        }
+
+        console.log({
+            title, image, body, tags: tagsArray, uid: user.uid, createdBy: user.displayName
+        });
+
+        if(formError) return
+
+        insertDocument({ 
+            title, image, body, tags: tagsArray, userId: user.uid, createdBy: user.displayName 
+        })
+
+        // redirect to homepage
+        navigate("/")
     };
 
     return (
@@ -48,7 +82,9 @@ const CreatePost = () => {
                     onChange={ (e) => setTags(e.target.value) } value={ tags } />    
                 </label>
 
-                <button className='btn'>Criar</button>
+                { !response.loading && <button className='btn'>Criar</button> }
+                { response.loading && <button className='btn' disabled>Aguarde...</button> }
+                { response.error && <p className='error'>{ response.error }</p> }
             </form>            
         </div>
     );
