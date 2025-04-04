@@ -25,14 +25,14 @@ import { AuthProvider } from './context/AuthContext'
 function App() {
     const [ user, setUser ] = useState(undefined);
     const { auth } = useAuthentication();
-
+    
+    
     // check user authentication
     useEffect(() => {
         onAuthStateChanged(auth, (userReturn) => {
             setUser(userReturn);
         })
     }, [ auth ]);
-    //console.log('usuario: ',user)
     
     // check user not authenticated
     if(user === undefined){
