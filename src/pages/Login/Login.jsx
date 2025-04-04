@@ -9,20 +9,19 @@ import { useAuthentication } from '../../hooks/useAuthentication'; //custom hook
 const Login = () => {
     const [ email, setEmail ] = useState('');
     const [ password, setPassword ] = useState('');
-    const { loading, createUser, error: authError } = useAuthentication(); // custom hook returns
     const [ error, setError ] = useState('');
-    const [ success, setSuccess ] = useState('');
-
+    
+    const { loading, login, error: authError } = useAuthentication(); // custom hook returns
+    
     useEffect(() => {
-        if(error != '' || success != ''){
+        if(error != ''){
             const time = setTimeout(() => {
                 setError('');
-                setSuccess('');
             }, 3000);
 
             return () => clearTimeout(time);
         }
-    }, [ error, success ]);
+    }, [ error ]);
     
 
     // fórm submit
@@ -32,13 +31,12 @@ const Login = () => {
         const user = {
             email, password
         };
-
-        const res = await createUser(user);
-        console.log(res);
-
+        
         if(authError){
             setError(authError);
         }
+
+        await login(user);
     };
 
     return (
@@ -48,7 +46,6 @@ const Login = () => {
 
             <form onSubmit={handleSubmit}>
                 { error && <p className='error'>{ error }</p> }
-                { success != '' && <p className='success'>{ success }</p> }       
                 
                 <label>
                     <span>Email: </span>

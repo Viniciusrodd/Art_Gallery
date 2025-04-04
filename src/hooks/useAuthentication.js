@@ -16,17 +16,18 @@ export const useAuthentication = () => {
 
     // CLEAN-UP FUNCTION 
     // for deal with memory leak problems:
-    const [ cancelled, setCancelled ] = useState(false);    
+    const [ cancelled, setCancelled ] = useState(false); // begins with 'false' whatever useEffect function
     function checkIfIsCancelled(){
         if(cancelled){
-            return;
+            return; 
         }
     };
     useEffect(() => {
-        return () => setCancelled(true); //clean up function
+        return () => setCancelled(true); //clean up function just when component get out of screen
     }, []);
 
     
+    // authentication
     const auth = getAuth()// from firebase:
 
 
@@ -45,8 +46,8 @@ export const useAuthentication = () => {
             return user;
         }
         catch(error){
-            console.log(error.message)
-            console.log(typeof error.message)
+            console.log(error.message);
+            console.log(typeof error.message);
 
             let systemErrorMessage;
             if(error.message.includes('Password')){
@@ -57,7 +58,8 @@ export const useAuthentication = () => {
                 systemErrorMessage = 'Ocorreu um erro! por favor, tente mais tarde...';
             }
 
-            setError(systemErrorMessage)
+            setError(systemErrorMessage);
+            setLoading(false);
         };
     };
 
@@ -69,5 +71,30 @@ export const useAuthentication = () => {
     };
 
 
-    return { auth, createUser, loading, error, logout };
+    // login
+    const login = async (data) => {
+        checkIfIsCancelled();
+        setLoading(true);
+        setError(false)
+
+        try{
+            await signInWithEmailAndPassword(auth, data.email, data.password);
+            setLoading(false);
+        }
+        catch(error){
+            let systemErrorMessage;
+
+            if(error.message.includes("invalid-credential")){
+                systemErrorMessage = "Dados inválidos.";
+            }else{
+                systemErrorMessage = "Houve um problema na conexão com o servidor, tente mais tarde."
+            }
+
+            setError(systemErrorMessage);
+            setLoading(false);
+        }
+    };
+
+
+    return { auth, createUser, loading, error, logout, login };
 }
