@@ -3,7 +3,7 @@
 import styles from './CreatePost.module.css';
 
 // hooks
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthValue } from '../../context/AuthContext'; // Auth Context
 import { useInsertDocuments } from '../../hooks/useInsertDocuments'; // custom hook
@@ -21,35 +21,41 @@ const CreatePost = () => {
 
     const handleSubmit = (e) =>{
         e.preventDefault();
+        setFormError(''); //reseting prev errors
 
         // validation url image
-        try {
+        try{
             new URL(image);
         } 
-        catch (error) {
+        catch(error){
             setFormError("A imagem precisa ser uma URL.");
+            return;
         }
 
         // create array of tags
         const tagsArray = tags.split(",").map((tag) => tag.trim().toLowerCase());
 
+        if(tagsArray.length === 0 || tagsArray.some(tag => tag === '')){
+            setFormError('Por favor, insira ao menos 1 tag válida');
+            return;
+        }
+
         // check all the values
-        if (!title || !image || !tags || !body) {
+        if (!title || !image || !body || tagsArray.length === 0) {
             setFormError("Por favor, preencha todos os campos!");
+            return;
         }
 
         console.log({
             title, image, body, tags: tagsArray, uid: user.uid, createdBy: user.displayName
         });
 
-        if(formError) return
-
         insertDocument({ 
             title, image, body, tags: tagsArray, userId: user.uid, createdBy: user.displayName 
         })
 
         // redirect to homepage
-        navigate("/")
+        navigate("/");
     };
 
     return (
@@ -85,6 +91,7 @@ const CreatePost = () => {
                 { !response.loading && <button className='btn'>Criar</button> }
                 { response.loading && <button className='btn' disabled>Aguarde...</button> }
                 { response.error && <p className='error'>{ response.error }</p> }
+                { formError != '' && <p className='error'>{ formError }</p> }
             </form>            
         </div>
     );
