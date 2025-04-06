@@ -35,7 +35,8 @@ export const useFetchDocuments = (docCollection, search = null, userid = null) =
                 await onSnapshot(q, (querySnapshot) => {
                     setDocuments(querySnapshot.docs.map((doc) => ({
                         id: doc.id,
-                        ...doc.data()
+                        ...doc.data() // extracting all fields of document
+                        // data() is a method avaible in objects "DocumentSnapshot" from Firestore
                     })));
                 });
 
