@@ -18,6 +18,7 @@ import Login from './pages/Login/Login'
 import Register from './pages/Register/Register'
 import CreatePost from './pages/CreatePost/CreatePost'
 import Dashboard from './pages/Dashboard/Dashboard'
+import Search from './pages/Search/Search'
 
 // import context
 import { AuthProvider } from './context/AuthContext'
@@ -25,7 +26,6 @@ import { AuthProvider } from './context/AuthContext'
 function App() {
     const [ user, setUser ] = useState(undefined);
     const { auth } = useAuthentication();
-    
     
     // check user authentication
     useEffect(() => {
@@ -47,6 +47,7 @@ function App() {
                 
                     <div className="container">
                         <Routes>
+                            <Route path='/search' element={ <Search /> } />
                             <Route path='/' element={ <Home /> } />
                             <Route path='/about' element={ <About /> } />
                             <Route path='/login' element={ !user ? ( <Login/> ) : ( <Navigate to='/' /> ) } /> {/*page need auth*/}
