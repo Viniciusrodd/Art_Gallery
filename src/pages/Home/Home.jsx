@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useFetchDocuments } from '../../hooks/useFetchDocuments';
 
 // component
-import PostDetail from '../../components/PostDetail';
+import PostDetail from '../../components/PostDetails/PostDetail';
 
 const Home = () => {
     const [ query, setQuery ] = useState('');
