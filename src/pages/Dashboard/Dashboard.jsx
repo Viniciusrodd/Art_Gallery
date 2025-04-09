@@ -13,15 +13,17 @@ import { useFetchDocuments } from '../../hooks/useFetchDocuments'; // custom hoo
 
 const Dashboard = () => {
     const { user } = useAuthValue();
-    const userID = user.uid
-    const posts = [];
-
-    //const { documents: posts } = useFetchDocuments('posts', userID)
+    const userID = user.uid;
+    const { documents: posts, loading, error } = useFetchDocuments('posts', null, userID);
 
     return (
         <div>
+            { loading && <p>Carregando...</p> }
+            { error && <p>{ error }</p> }
+
             <h2>DashBoard</h2>        
             <p>Gerencie os seus posts</p>
+            
             { posts && posts.length === 0 ? (
                 <div className={ styles.noposts }>
                     <p>Não foram encontrados posts...</p>
@@ -32,6 +34,10 @@ const Dashboard = () => {
                     <p>Possui posts...</p>
                 </div>
             )}
+
+            { posts && posts.map((post) => (
+                <h3 key={ post.id }>{ post.title }</h3>
+            )) }
         </div>
     );
 };

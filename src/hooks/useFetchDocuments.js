@@ -34,6 +34,11 @@ export const useFetchDocuments = (docCollection, search = null, userid = null) =
                         where('tags', 'array-contains', search), // "array-contains" is a method from firebase 
                         orderBy('createdAt', 'desc')
                     );
+                } else if(userid){
+                    q = await query(collectionRef, 
+                        where('userId', '==', userid),
+                        orderBy('createdAt', 'desc')
+                    );
                 }else{
                     q = await query(collectionRef, orderBy('createdAt', 'desc'));
                 }
@@ -56,7 +61,7 @@ export const useFetchDocuments = (docCollection, search = null, userid = null) =
             }
         };
         loadData();
-    }, [ docCollection, documents, search, userid, cancelled ]);
+    }, [ docCollection, search, userid, cancelled ]);
 
     // memory leak
     useEffect(() => {
