@@ -10,20 +10,19 @@ import { useAuthValue } from '../../context/AuthContext'; // custom hook
 
 // hooks
 import { useFetchDocuments } from '../../hooks/useFetchDocuments'; // custom hook
+import { useDeleteDocuments } from '../../hooks/useDeleteDocuments'; // custom hook
 
 const Dashboard = () => {
     const { user } = useAuthValue();
     const userID = user.uid;
-    const { documents: posts, loading, error } = useFetchDocuments('posts', null, userID);
+    const { documents: posts, loading, error } = useFetchDocuments('posts', null, userID); // useFetchDocuments
+    const { deleteDocument, response } = useDeleteDocuments('posts');
 
     // won't even come in my jsx page
     if(loading){
         return <p>Carregando...</p>
     }
     
-    const deleteDocuments = (id) => {
-        console.log(id);
-    };
 
     return (
         <div className={ styles.dashboard }>
@@ -56,7 +55,7 @@ const Dashboard = () => {
                                 <Link to={`/posts/edit/${ post.id }`} className='btn btn-outline'>
                                     Editar
                                 </Link>
-                                <button onClick={() => deleteDocuments(post.id)} className='btn btn-outline btn-danger'>
+                                <button onClick={() => deleteDocument(post.id)} className='btn btn-outline btn-danger'>
                                     Excluir
                                 </button>
                             </div>
