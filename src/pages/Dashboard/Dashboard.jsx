@@ -16,9 +16,17 @@ const Dashboard = () => {
     const userID = user.uid;
     const { documents: posts, loading, error } = useFetchDocuments('posts', null, userID);
 
+    // won't even come in my jsx page
+    if(loading){
+        return <p>Carregando...</p>
+    }
+    
+    const deleteDocuments = (id) => {
+        console.log(id);
+    };
+
     return (
-        <div>
-            { loading && <p>Carregando...</p> }
+        <div className={ styles.dashboard }>
             { error && <p>{ error }</p> }
 
             <h2>DashBoard</h2>        
@@ -30,14 +38,33 @@ const Dashboard = () => {
                     <Link to='/posts/create' className='btn'>Criar primeiro post</Link>
                 </div>
             ) : (
-                <div>
-                    <p>Possui posts...</p>
-                </div>
+                <>
+                    {/* headers of post */}
+                    <div className={ styles.post_header }>
+                        <span>Titulo</span>
+                        <span>Ações</span>
+                    </div>
+
+                    {/* body of post */}
+                    { posts && posts.map((post) => (
+                        <div key={ post.id } className={ styles.post_row }>
+                            <p>{ post.title }</p>
+                            <div>
+                                <Link to={`/posts/${ post.id }`} className='btn btn-outline'>
+                                    Ver
+                                </Link>
+                                <Link to={`/posts/edit/${ post.id }`} className='btn btn-outline'>
+                                    Editar
+                                </Link>
+                                <button onClick={() => deleteDocuments(post.id)} className='btn btn-outline btn-danger'>
+                                    Excluir
+                                </button>
+                            </div>
+                        </div>
+                    )) }
+                </>
             )}
 
-            { posts && posts.map((post) => (
-                <h3 key={ post.id }>{ post.title }</h3>
-            )) }
         </div>
     );
 };
