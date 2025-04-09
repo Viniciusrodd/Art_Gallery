@@ -56,7 +56,7 @@ export const useFetchDocuments = (docCollection, search = null, userid = null) =
             }
         };
         loadData();
-    }, [ docCollection, search, userid, cancelled ]);
+    }, [ docCollection, documents, search, userid, cancelled ]);
 
     // memory leak
     useEffect(() => {
