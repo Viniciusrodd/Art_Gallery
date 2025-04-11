@@ -6,13 +6,14 @@ import styles from './EditPost.module.css';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useAuthValue } from '../../context/AuthContext'; // Auth Context
-import { useInsertDocuments } from '../../hooks/useInsertDocuments'; // custom hook
 import { useFetchPost } from '../../hooks/useFetchPost'; // custom hook
+import { useUpdateDocuments } from '../../hooks/useUpdateDocument'; // custom hook
 
 const EditPost = () => {
     const { id } = useParams();
     const { document: post, loading, error } = useFetchPost('posts', id);
     const navigate = useNavigate();
+
 
     useEffect(() => {
         if(post){
@@ -30,7 +31,7 @@ const EditPost = () => {
     const [ tags, setTags ] = useState([]);
     const [ formError, setFormError ] = useState('');
     
-    const { insertDocument, response } = useInsertDocuments('posts'); // from custom hook, 'posts': callback to 'docCollection'
+    const { updateDocument, response } = useUpdateDocuments('posts');
     const { user } = useAuthValue() // user value from context
 
     const handleSubmit = (e) =>{
@@ -64,12 +65,12 @@ const EditPost = () => {
             title, image, body, tags: tagsArray, uid: user.uid, createdBy: user.displayName
         });
 
-        insertDocument({ 
-            title, image, body, tags: tagsArray, userId: user.uid, createdBy: user.displayName 
-        })
+        const data = { title, image, body, tags: tagsArray, userId: user.uid, createdBy: user.displayName }
+
+        updateDocument(id, data);
 
         // redirect to homepage
-        navigate("/");
+        navigate("/dashboard");
     };
 
     return (
