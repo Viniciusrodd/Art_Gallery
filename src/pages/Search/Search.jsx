@@ -22,18 +22,16 @@ const Search = () => {
 
     return (
         <div className={ styles.search_container }>
-            <h1>Search</h1>
-            <div>
-                { posts && posts.length === 0 && (
-                    <>
-                        <p>Não foram encontrados posts a partir da sua busca...</p>
-                        <Link to='/' className='btn btn-dark'>Voltar</Link>
-                    </>
-                ) }
-                { posts && posts.map((post) => (
-                    <PostDetail key={ post.id } post={ post } />
-                )) }
-            </div>
+            <h1>Resultado</h1>
+            { posts && posts.length === 0 && (
+                <>
+                    <p>Não foram encontrados Publicações a partir da sua busca...</p>
+                    <Link to='/' className='btn btn-dark'>Voltar</Link>
+                </>
+            ) }
+            { posts && posts.map((post) => (
+                <PostDetail key={ post.id } post={ post } />
+            )) }
         </div>
     );
 };

@@ -60,7 +60,7 @@ const CreatePost = () => {
 
     return (
         <div className={ styles.create_post }>
-            <h2>Criar post</h2>
+            <h2>Criar arte</h2>
             <p>Escreva sobre oque você quiser e compartilhe o seu conhecimento!</p>
 
             <form onSubmit={ handleSubmit }>

@@ -29,12 +29,12 @@ const Dashboard = () => {
             { error && <p>{ error }</p> }
 
             <h2>DashBoard</h2>        
-            <p>Gerencie os seus posts</p>
+            <p>Gerencie os suas artes</p>
             
             { posts && posts.length === 0 ? (
                 <div className={ styles.noposts }>
-                    <p>Não foram encontrados posts...</p>
-                    <Link to='/posts/create' className='btn'>Criar primeiro post</Link>
+                    <p>Não foram encontradas artes...</p>
+                    <Link to='/posts/create' className='btn'>Criar primeira arte</Link>
                 </div>
             ) : (
                 <>

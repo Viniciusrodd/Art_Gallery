@@ -75,8 +75,8 @@ const EditPost = () => {
 
     return (
         <div className={ styles.edit_post }>
-            <h2>Editando post: { title }</h2>
-            <p>Altere os dados do post como desejar...</p>
+            <h2>Editando arte: { title }</h2>
+            <p>Altere os dados da publicação como desejar...</p>
 
             { post && (
                 <>    
