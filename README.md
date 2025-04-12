@@ -1,12 +1,46 @@
-# React + Vite
+# 🎨 Art. Gallery
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+O **Art. Gallery** é um site/blog focado em arte, com a proposta de funcionar como uma “rede social” para exposição de obras. Desenvolvido em **React** no front‑end e **Firebase** no back‑end, o projeto permite que artistas e amantes da arte criem, compartilhem e descubram trabalhos de forma dinâmica.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌟 Qual é o propósito deste projeto?
 
-## Expanding the ESLint configuration
+O **Art. Gallery** serve para oferecer um espaço simples, moderno e colaborativo para:
+- **Exposição de obras de arte**: fotos, ilustrações, pinturas, esculturas etc.
+- **Descoberta por tags**: encontre arte por tema, técnica ou estilo.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🛠️ Funcionalidades principais
+
+### 👥 Autenticação de usuários
+- **Cadastro de usuário:** Crie sua conta com e‑mail e senha.
+- **Login/Logout:** Acesse e saia com segurança.
+
+### 🖼️ Gerenciamento de obras
+- **Postar arte:** informe nome da obra, URL da imagem, descrição e tags.
+- **Editar obra:** atualize título, imagem, descrição ou tags.
+- **Excluir obra:** remova trabalhos indesejados.
+
+### 🔍 Busca e navegação
+- **Pesquisar por tags:** filtre obras por palavras‑chave.
+- **Feed dinâmico:** navegue pelas publicações mais recentes.
+
+### ⚛️ Dinamismo com React
+- **Componentização:** UI totalmente baseada em componentes.
+- **Reatividade:** atualizações instantâneas sem reload.
+- **State management:** uso de hooks para controlar dados e formulários.
+
+---
+
+## 🖥️ Tecnologias utilizadas
+
+- **React** – biblioteca JavaScript para interfaces.
+- **Firebase Authentication** – cadastro e login de usuários.
+- **Firebase Firestore** – banco de dados em tempo real.
+- **Firebase Storage** – hospedagem de imagens.
+- **React Router** – roteamento de páginas.
+- **Styled Components** (ou CSS Modules) – estilização de componentes.
+
+---
